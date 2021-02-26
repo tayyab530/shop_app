@@ -9,12 +9,12 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (ctx) => ProductProvider(),
+      create: (ctx) => ProductProvider(), //When first intanstiate, should use create syntax 
       child: MaterialApp(
         title: 'MyShop',
         theme: ThemeData(
           primarySwatch: Colors.blueGrey,
-          accentColor: Colors.yellowAccent,
+          accentColor: Colors.deepOrangeAccent,
           fontFamily: 'Lato',
         ),
         home: HomePage(),

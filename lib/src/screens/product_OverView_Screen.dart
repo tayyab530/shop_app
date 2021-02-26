@@ -7,7 +7,7 @@ import '../widgets/product_Item.dart';
 class ProductOverViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _loadedProducts = Provider.of<ProductProvider>(context).items;
+    final _products = Provider.of<ProductProvider>(context).items;
     return GridView.builder(
       padding: EdgeInsets.all(10.0),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -17,10 +17,12 @@ class ProductOverViewScreen extends StatelessWidget {
         mainAxisSpacing: 15.0,
       ),
       itemBuilder: (ctx, i) {
-        return ProductItem(_loadedProducts[i].id, _loadedProducts[i].title,
-            _loadedProducts[i].imageUrl);
+        return ChangeNotifierProvider.value(    //this syntax is best for listView and GridView else it prones errors 
+          value: _products[i],
+          child: ProductItem(),
+        );
       },
-      itemCount: _loadedProducts.length,
+      itemCount: _products.length,
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:shop_app/src/models/products.dart';
+import 'package:shop_app/src/providers/products.dart';
 
 class ProductProvider with ChangeNotifier {
   List<Product> _items = [
