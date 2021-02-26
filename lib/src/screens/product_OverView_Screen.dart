@@ -5,7 +5,6 @@ import 'package:shop_app/src/providers/product_provider.dart';
 import '../widgets/product_Item.dart';
 
 class ProductOverViewScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final _loadedProducts = Provider.of<ProductProvider>(context).items;
