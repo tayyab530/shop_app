@@ -1,28 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/src/providers/product_provider.dart';
+import 'package:shop_app/src/providers/cart.dart';
+import 'package:shop_app/src/screens/cart_screen.dart';
+import 'package:shop_app/src/widgets/badge.dart';
 
-import '../widgets/product_Item.dart';
+import 'product_grid.dart';
+import '../providers/product_provider.dart';
 
-class ProductOverViewScreen extends StatelessWidget {
+class ProductOverViewScreen extends StatefulWidget {
+  @override
+  _ProductOverViewScreenState createState() => _ProductOverViewScreenState();
+}
+
+class _ProductOverViewScreenState extends State<ProductOverViewScreen> {
+  var _isFavourite = false;
+
   @override
   Widget build(BuildContext context) {
-    final _products = Provider.of<ProductProvider>(context).items;
-    return GridView.builder(
-      padding: EdgeInsets.all(10.0),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 3 / 2,
-        crossAxisSpacing: 15.0,
-        mainAxisSpacing: 15.0,
+    final _productsData = Provider.of<ProductProvider>(context, listen: false);
+    var _products =
+        _isFavourite ? _productsData.favouriteItems : _productsData.items;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('MyShop'),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (_) {
+              return [
+                PopupMenuItem(
+                  child: Text('Only Favourite'),
+                  value: Favourite.OnlyFavourite,
+                ),
+                PopupMenuItem(
+                  child: Text('All'),
+                  value: Favourite.All,
+                ),
+              ];
+            },
+            onSelected: (Favourite selected) {
+              if (selected == Favourite.OnlyFavourite) {
+                setState(() {
+                  _isFavourite = true;
+                });
+              } else {
+                setState(() {
+                  _isFavourite = false;
+                });
+              }
+            },
+          ),
+          Consumer<Cart>(
+            builder: (_,cart,ch)=>Badge(
+              child: ch,
+              value: cart.itemsLength.toString(),
+            ),
+            child: IconButton(icon: Icon(Icons.shopping_cart_rounded),onPressed: () => goto(context),),
+          ),
+        ],
       ),
-      itemBuilder: (ctx, i) {
-        return ChangeNotifierProvider.value(    //this syntax is best for listView and GridView else it prones errors 
-          value: _products[i],
-          child: ProductItem(),
-        );
-      },
-      itemCount: _products.length,
+      body: ProductGrid(_products),
     );
   }
+
+  goto(BuildContext ctx){
+    Navigator.of(ctx).pushNamed(CartScreen.routeName);
+  }
+}
+
+enum Favourite {
+  OnlyFavourite,
+  All,
 }
