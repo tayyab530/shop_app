@@ -21,6 +21,7 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
+      direction: DismissDirection.endToStart,
       key: ValueKey(id),
       background: Container(
         child: const Icon(Icons.delete_rounded),

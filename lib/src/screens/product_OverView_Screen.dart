@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/src/providers/cart.dart';
-import 'package:shop_app/src/screens/cart_screen.dart';
-import 'package:shop_app/src/widgets/badge.dart';
 
-import 'product_grid.dart';
+import '../providers/cart.dart';
+import '../screens/cart_screen.dart';
+import '../widgets/app_drawer.dart';
+import '../widgets/badge.dart';
+import './product_grid.dart';
 import '../providers/product_provider.dart';
 
 class ProductOverViewScreen extends StatefulWidget {
@@ -22,6 +23,7 @@ class _ProductOverViewScreenState extends State<ProductOverViewScreen> {
         _isFavourite ? _productsData.favouriteItems : _productsData.items;
 
     return Scaffold(
+      drawer: AppDrawer(),
       appBar: AppBar(
         title: Text('MyShop'),
         actions: [

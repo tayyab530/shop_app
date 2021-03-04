@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/src/providers/cart.dart';
+import 'package:shop_app/src/providers/orders.dart';
+import 'package:shop_app/src/screens/order_screen.dart';
 
 import 'providers/product_provider.dart';
 import 'screens/product_details_screen.dart';
@@ -17,7 +19,10 @@ class App extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => Cart(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Orders(),
+        ),
       ], //When first intanstiate, should use create syntax
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -31,6 +36,7 @@ class App extends StatelessWidget {
         routes: {
           ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
           CartScreen.routeName: (ctx) => CartScreen(),
+          OrderScreen.routeName: (ctx) => OrderScreen(),
         },
       ),
     );

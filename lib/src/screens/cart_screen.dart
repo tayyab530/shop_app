@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/src/providers/orders.dart';
 
 import '../providers/cart.dart' show Cart;
 import '../widgets/cart_item.dart';
@@ -32,10 +33,14 @@ class CartScreen extends StatelessWidget {
                   Spacer(),
                   Chip(
                       label: Text(
-                    '\$${_cart.totalAmount}',
+                    '\$${_cart.totalAmount.toStringAsFixed(2)}',
                   )),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<Orders>(context, listen: false).addOrder(
+                          _cart.item.values.toList(), _cart.totalAmount);
+                      _cart.clearCart();
+                    },
                     child: Text(
                       'ORDER',
                       style: TextStyle(color: Theme.of(context).accentColor),
@@ -46,13 +51,15 @@ class CartScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 15.0),
-          Container(
-            // width: MediaQuery.of(context).size.width - 5.0,
-            height: MediaQuery.of(context).size.height - 200.0,
+          Expanded(
+            // // width: MediaQuery.of(context).size.width - 5.0,
+            // height: MediaQuery.of(context).size.height - 200.0,
+
             child: ListView.builder(
               itemBuilder: (ctx, index) {
                 var item = _cart.item.values.toList()[index];
-                return CartItem( _cart.item.keys.toList()[index],item.id, item.title, item.quantity, item.price);
+                return CartItem(_cart.item.keys.toList()[index], item.id,
+                    item.title, item.quantity, item.price);
               },
               itemCount: _cart.itemsLength,
             ),
