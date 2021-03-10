@@ -26,11 +26,13 @@ class CartItem extends StatelessWidget {
       background: Container(
         child: const Icon(Icons.delete_rounded),
         color: Theme.of(context).errorColor,
-        alignment:  Alignment.centerRight,
+        alignment: Alignment.centerRight,
         margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
         padding: const EdgeInsets.all(10.0),
       ),
-      onDismissed: (direction) {Provider.of<Cart>(context,listen: false).removeItem(productId);},
+      onDismissed: (direction) {
+        Provider.of<Cart>(context, listen: false).removeItem(productId);
+      },
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
         child: ListTile(
@@ -40,9 +42,25 @@ class CartItem extends StatelessWidget {
               child: FittedBox(child: Text('${price * quantity}')),
             ),
           ),
-          title:  Text(title),
+          title: Text(title),
           subtitle: Text(price.toString()),
           trailing: Text(quantity.toString()),
+        ),
+      ),
+      confirmDismiss: (direction) => showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('Are you sure to remove the item?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: Text('No'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(true),
+              child: Text('Yes'),
+            ),
+          ],
         ),
       ),
     );
