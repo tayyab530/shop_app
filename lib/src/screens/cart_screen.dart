@@ -35,7 +35,7 @@ class CartScreen extends StatelessWidget {
                       label: Text(
                     '\$${_cart.totalAmount.toStringAsFixed(2)}',
                   )),
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
                       Provider.of<Orders>(context, listen: false).addOrder(
                           _cart.item.values.toList(), _cart.totalAmount);
