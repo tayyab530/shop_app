@@ -9,6 +9,7 @@ import 'providers/product_provider.dart';
 import 'screens/product_details_screen.dart';
 import 'screens/product_OverView_Screen.dart';
 import 'screens/cart_screen.dart';
+import 'screens/edit_product_screen.dart';
 
 class App extends StatelessWidget {
   @override
@@ -39,6 +40,7 @@ class App extends StatelessWidget {
           CartScreen.routeName: (ctx) => CartScreen(),
           OrderScreen.routeName: (ctx) => OrderScreen(),
           UserProductScreen.routeName: (ctx) => UserProductScreen(),
+          EditProductScreen.routeName: (ctx) => EditProductScreen(),
         },
       ),
     );
